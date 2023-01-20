@@ -1,0 +1,48 @@
+@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap");
+html {
+  scroll-behavior: smooth;
+}
+body {
+  scroll-behavior: smooth;
+}
+input {
+  background-color: none !important;
+}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: Lora, sans-serif;
+  }
+}
+@layer components {
+  .style-text-date {
+    @apply uppercase text-color_date font-bold;
+  }
+  .input-primary {
+    @apply py-1 px-2 pr-4 text-sm border-b outline-none bg-none rounded-sm;
+  }
+  .btn-primary {
+    @apply w-24 h-8 bg-color_primary block rounded-sm ml-auto cursor-pointer hover:bg-color_thirdly
+      transition-all;
+  }
+  .btn-cancel {
+    @apply w-24 h-9 bg-white block rounded-sm ml-auto border border-sky-600 cursor-pointer;
+  }
+}
+span .tag-line {
+  font-weight: 500;
+}
+.created-time,
+.updated-time {
+  font-weight: 300;
+}
+.masonry-with-columns {
+  columns: 3 200px;
+  column-gap: 1rem;
+}
+.masonry-with-columns div {
+  display: inline-block;
+}
