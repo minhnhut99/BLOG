@@ -5,13 +5,15 @@ import SideNav from "./side_nav/SideNav";
 const Admin = () => {
   return (
     <div className="w-screen h-screen overflow-hidden">
-      <div className="py-4">
-        <ul className="flex flex-center justify-end">
-          <li>1</li>
-          <li>2</li>
-          <li>3</li>
-        </ul>
-      </div>
+      <header className="h-14 bg-slate-100 flex justify-end items-center">
+        <div className="w-12 h-12">
+          <img
+            className="w-full h-full rounded-full"
+            src="https://images.unsplash.com/photo-1674167526280-8ee04e4a473c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyMnx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60"
+            alt="avatar"
+          />
+        </div>
+      </header>
       <div className="flex w-full h-full">
         {/* side nav */}
         <SideNav />
