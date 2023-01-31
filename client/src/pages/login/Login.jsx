@@ -1,16 +1,25 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { login } from "../../redux/authSlice";
 import googleLogo from "../../assets/images/google-logo.svg";
 import { BiShow } from "react-icons/bi";
 const Login = () => {
   // ==== hook ====
   const navigate = useNavigate();
   const [typePassword, setTypePassword] = useState("password");
-
+  const dispatch = useDispatch();
   // ==== handleFunciton ====
   const handleClickBtnSubmit = (data) => {
-    console.log("dataLogin", data);
+    dispatch(
+      login({
+        data,
+        callback: (res, data) => {
+          console.log(res);
+        },
+      })
+    );
   };
 
   const handleClickRedirectSignUp = () => {
