@@ -5,8 +5,8 @@ const httpHandler = require("../helper/HttpHandler");
 const controllerUser = {
   register: async (req, res) => {
     try {
-      const { fullname, username, password, email } = req.body;
-      if (!(fullname && username && email && password)) {
+      const { username, password, email } = req.body;
+      if (!(username && email && password)) {
         httpHandler.fail(res, "Missing username or password");
       }
       const oldUser = await modelUser.findOne({ email });
@@ -16,7 +16,6 @@ const controllerUser = {
       encryptedPassword = await bcrypt.hash(password, 10);
 
       const user = await modelUser.create({
-        fullname,
         username: username.toLowerCase(),
         password: encryptedPassword,
         email: email.toLowerCase(),
