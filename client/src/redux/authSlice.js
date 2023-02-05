@@ -5,7 +5,6 @@ export const login = createAsyncThunk(
   "user/login",
   async ({ payload, callback }) => {
     const user = await fetchData("/login", { body: payload });
-    console.log("user", user);
     if (user.token) {
       localStorage.setItem("user", JSON.stringify(user.data));
       localStorage.setItem("accesstoken", user.token);
@@ -24,7 +23,7 @@ export const signup = createAsyncThunk(
   "user/register",
   async ({ payload, callback }) => {
     const user = await fetchData("/register", { body: payload });
-
+    console.log("user", user);
     if (user.token) {
       localStorage.setItem("user", JSON.stringify(user.data));
       localStorage.setItem("accesstoken", user.token);

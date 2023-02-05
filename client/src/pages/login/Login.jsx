@@ -12,6 +12,7 @@ const Login = () => {
   const dispatch = useDispatch();
   // ==== handleFunciton ====
   const handleClickBtnSubmit = (data) => {
+    console.log("data", data);
     dispatch(
       login({
         data,
@@ -68,7 +69,7 @@ const Login = () => {
           <div className="h-4/5 w-1/3 px-6 py-8 rounded-sm sm:w-full">
             <h2
               className="text-title
-           font-bold text-3xl uppercase text-center  mb-4"
+           font-bold text-3xl uppercase text-center mb-4"
             >
               Login
             </h2>
@@ -84,11 +85,11 @@ const Login = () => {
                   name="username"
                   {...register("username", loginOptions.username)}
                 />
-                <small className="text-red-500">
-                  {errors?.username && errors.username.message}
-                </small>
               </div>
-              <div className="w-full relative ">
+              <small className="text-red-500">
+                {errors?.username && errors.username.message}
+              </small>
+              <div className="w-full relative">
                 <input
                   type={typePassword}
                   className="input-primary mt-4 mb-1 w-full"
@@ -96,9 +97,7 @@ const Login = () => {
                   name="password"
                   {...register("password", loginOptions.password)}
                 />
-                <small className="text-red-500">
-                  {errors?.password && errors.password.message}
-                </small>
+
                 <span
                   onClick={handleClickToggleShowPassword}
                   className=" cursor-pointer absolute right-2 top-1/2"
@@ -106,6 +105,9 @@ const Login = () => {
                   <BiShow size={15} />
                 </span>
               </div>
+              <small className="text-red-500">
+                {errors?.password && errors.password.message}
+              </small>
               <div
                 className="flex justify-end mb-4 w-full"
                 onClick={handleClickRedirectSignUp}

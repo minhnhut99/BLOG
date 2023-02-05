@@ -1,15 +1,27 @@
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { BiShow } from "react-icons/bi";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import googleLogo from "../../assets/images/google-logo.svg";
-import { BiShow } from "react-icons/bi";
-import { useForm } from "react-hook-form";
+import { signup } from "../../redux/authSlice";
 const Login = () => {
   // ==== hook ====
   const navigate = useNavigate();
   const [typePassword, setTypePassword] = useState("password");
+  const dispatch = useDispatch();
   // ==== handleFunciton ====
   const handleClickBtnSubmit = (data) => {
-    console.log("adataa", data);
+    dispatch(
+      signup({
+        data,
+        callback: (res, msg) => {
+          if (res) {
+            navigate("/login");
+          }
+        },
+      })
+    );
   };
   const handleClickRedirectLogin = () => {
     navigate("/");
@@ -90,7 +102,18 @@ const Login = () => {
                   {errors?.email && errors.email.message}
                 </small>
               </div>
-
+              <div className="w-full">
+                <input
+                  type="text"
+                  className="input-primary mt-4 mb-1 w-full"
+                  placeholder="Username"
+                  name="username"
+                  {...register("username", signUpOptions.username)}
+                />
+                <small className="text-red-500">
+                  {errors?.username && errors.username.message}
+                </small>
+              </div>
               <div className="w-full relative">
                 <input
                   type={typePassword}
@@ -105,10 +128,10 @@ const Login = () => {
                 >
                   <BiShow size={15} />
                 </span>
-                <small className="text-red-500">
-                  {errors?.password && errors.password.message}
-                </small>
               </div>
+              <small className="text-red-500">
+                {errors?.password && errors.password.message}
+              </small>
               <div className="w-full relative">
                 <input
                   type={typePassword}
@@ -126,10 +149,10 @@ const Login = () => {
                 >
                   <BiShow size={15} />
                 </span>
-                <small className="text-red-500">
-                  {errors?.confirmpassword && errors.confirmpassword.message}
-                </small>
               </div>
+              <small className="text-red-500">
+                {errors?.confirmpassword && errors.confirmpassword.message}
+              </small>
               <div
                 className="flex justify-end mb-4 w-full"
                 onClick={handleClickRedirectLogin}
