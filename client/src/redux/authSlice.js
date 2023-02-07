@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { registerUser } from "";
 import { fetchData } from "../utils/connect";
 
 export const login = createAsyncThunk(
@@ -19,25 +20,15 @@ export const login = createAsyncThunk(
   }
 );
 
-export const signup = createAsyncThunk(
-  "user/register",
-  async ({ payload, callback }) => {
-    const user = await fetchData("/register", { body: payload });
-    console.log("user", user);
-    if (user.token) {
-      localStorage.setItem("user", JSON.stringify(user.data));
-      localStorage.setItem("accesstoken", user.token);
-      callback(true, null);
-      return user;
-    }
-    callback(false, user.message);
-    return null;
-  }
-);
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    data: JSON.parse(localStorage.getItem("user")),
+    // data: JSON.parse(localStorage.getItem("user")),
+    loading: false,
+    userInfo: null,
+    userToken: null,
+    error: null,
+    success: false,
   },
   reducers: {
     updateUser: (state, action) => {
@@ -52,7 +43,21 @@ const authSlice = createSlice({
       window.location.reload();
     },
   },
+  extraReducers: {
+    // register user
+    [registerUser.pending]: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    [registerUser.fullfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.success = true; // register successfully
+    },
+    [registerUser.rejected]: (state, { payload }) => {
+      state.loading = false;
+      state.error = payload;
+    },
+  },
 });
-const { actions, reducer } = authSlice;
-export const { updateUser, logout } = actions;
-export default reducer;
+
+export default authSlice.reducer;
