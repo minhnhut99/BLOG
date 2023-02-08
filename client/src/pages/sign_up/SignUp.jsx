@@ -1,27 +1,27 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { BiShow } from "react-icons/bi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import googleLogo from "../../assets/images/google-logo.svg";
-import { signup } from "../../redux/authSlice";
-const Login = () => {
+import { registerUser } from "../../redux/authActions";
+// import { signup } from "../../redux/authSlice";
+const SignUp = () => {
   // ==== hook ====
   const navigate = useNavigate();
   const [typePassword, setTypePassword] = useState("password");
+  const { loading, userInfo, error, success } = useSelector(
+    (state) => state.auth
+  );
   const dispatch = useDispatch();
+
   // ==== handleFunciton ====
   const handleClickBtnSubmit = (data) => {
-    dispatch(
-      signup({
-        data,
-        callback: (res, msg) => {
-          if (res) {
-            navigate("/login");
-          }
-        },
-      })
-    );
+    if (data.password !== data.confirmpassword) {
+      alert("Password missmatch");
+    }
+    data.email = data.email.toLowerCase();
+    dispatch(registerUser(data));
   };
   const handleClickRedirectLogin = () => {
     navigate("/");
@@ -186,4 +186,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;

@@ -6,7 +6,7 @@ const backendURL = "http://127.0.0.1:5000";
 
 export const registerUser = createAsyncThunk(
   "auth/register",
-  async ({ firstName, email, password }, { rejectWithValue }) => {
+  async ({ username, email, password }, { rejectWithValue }) => {
     try {
       const config = {
         headers: {
@@ -15,7 +15,7 @@ export const registerUser = createAsyncThunk(
       };
       await axios.post(
         `${backendURL}/api/user/register`,
-        { firstName, email, password },
+        { username, email, password },
         config
       );
     } catch (error) {
