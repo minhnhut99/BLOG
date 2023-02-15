@@ -8,9 +8,9 @@ const userSchema = new Schema({
     trim: true,
     unique: true,
   },
-  isAdmin: {
-    type: Boolean,
-    default: false,
+  role: {
+    type: Number,
+    default: 1,
   },
   email: {
     type: String,

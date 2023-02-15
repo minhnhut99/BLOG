@@ -2,13 +2,10 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const connectDB = require("./database/connectDB");
-
 const cors = require("./middleware/cors");
 const app = express();
-
 connectDB();
 cors.setHeaders(app);
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 

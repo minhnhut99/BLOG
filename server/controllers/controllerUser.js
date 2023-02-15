@@ -3,6 +3,21 @@ const jwt = require("jsonwebtoken");
 const modelUser = require("../models/modelUser");
 const httpHandler = require("../helper/HttpHandler");
 const controllerUser = {
+  getUserProfile: async (req, res) => {
+    try {
+      const user = await modelUser.findById(req.user._id);
+      if (user) {
+        const userInfo = {
+          id: user._id,
+          email: user.email,
+          username: user.username,
+        };
+        httpHandler.success(res, userInfo, "get profie successfully");
+      }
+    } catch (error) {
+      console.log("message error", error);
+    }
+  },
   register: async (req, res) => {
     try {
       const { username, password, email } = req.body;
