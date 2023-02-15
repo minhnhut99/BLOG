@@ -8,6 +8,9 @@ import Music from "../pages/music/Music";
 import General from "../pages/general/General";
 import SignUp from "../pages/sign_up/SignUp";
 const Router = () => {
+  const privateRoutes = () => {
+    <Routes></Routes>;
+  };
   const publicRoutes = () => (
     <Routes>
       <Route path="/" element={<Login />} />

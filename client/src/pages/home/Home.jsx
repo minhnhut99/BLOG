@@ -1,5 +1,6 @@
 import React from "react";
 import BlockBreak from "../../components/common/block_break/BlockBreak";
+import Loading from "../../_share/loading/Loading";
 import Music from "../music/Music";
 import Photo from "../photo/Photo";
 import Storries from "../storries/Storries";
@@ -56,18 +57,23 @@ const Home = () => {
   //   //     "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec mollis. Quisque convallis libero in sapien",
   //   // },
   // ];
-  return (
-    <React.Fragment>
-      <BlockBreak />
-      <div className="px-5 lg:px-1 lg:pr-0">
-        {/* tu su  */}
-        <Storries />
-        {/* Am nhac  */}
-        <Music />
-        <Photo />
-      </div>
-    </React.Fragment>
-  );
+  let check = false;
+  if (check) {
+    return <Loading />;
+  } else {
+    return (
+      <React.Fragment>
+        <BlockBreak />
+        <div className="px-5 lg:px-1 lg:pr-0">
+          {/* tu su  */}
+          <Storries />
+          {/* Am nhac  */}
+          <Music />
+          <Photo />
+        </div>
+      </React.Fragment>
+    );
+  }
 };
 
 export default Home;

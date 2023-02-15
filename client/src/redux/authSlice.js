@@ -1,32 +1,15 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { registerUser } from "./authActions";
-import { fetchData } from "../utils/connect";
+import { createSlice } from "@reduxjs/toolkit";
+import { loginUser, registerUser } from "./authActions";
 
-export const login = createAsyncThunk(
-  "user/login",
-  async ({ payload, callback }) => {
-    const user = await fetchData("/login", { body: payload });
-    if (user.token) {
-      localStorage.setItem("user", JSON.stringify(user.data));
-      localStorage.setItem("accesstoken", user.token);
-      setTimeout(() => {
-        callback("done", null);
-      }, 1000);
-      return user;
-    } else {
-      callback("error", user.message);
-      return null;
-    }
-  }
-);
-
+const userToken = localStorage.getItem("user_token")
+  ? localStorage.getItem("user_token")
+  : null;
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    // data: JSON.parse(localStorage.getItem("user")),
+    userToken,
     loading: false,
     userInfo: null,
-    userToken: null,
     error: null,
     success: false,
   },
@@ -39,17 +22,36 @@ const authSlice = createSlice({
     },
     logout: (state, action) => {
       state.data = {};
-      localStorage.clear();
+      // localStorage.clear();
+      localStorage.removeItem("user_token");
       window.location.reload();
+    },
+    setCredentials: (state, { payload }) => {
+      state.userInfo = payload;
     },
   },
   extraReducers: {
+    //login
+
+    [loginUser.pending]: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    [loginUser.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.userInfo = payload;
+      state.userToken = payload.userToken;
+    },
+    [loginUser.rejected]: (state, { payload }) => {
+      state.loading = false;
+      state.error = payload;
+    },
     // register user
     [registerUser.pending]: (state) => {
       state.loading = true;
       state.error = null;
     },
-    [registerUser.fullfilled]: (state, { payload }) => {
+    [registerUser.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.success = true; // register successfully
     },
@@ -59,5 +61,5 @@ const authSlice = createSlice({
     },
   },
 });
-
+export const { logout, setCredentials } = authSlice.actions;
 export default authSlice.reducer;

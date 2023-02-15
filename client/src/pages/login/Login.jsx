@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { login } from "../../redux/authSlice";
+import { loginUser } from "../../redux/authActions";
 import googleLogo from "../../assets/images/google-logo.svg";
 import { BiShow } from "react-icons/bi";
 const Login = () => {
@@ -12,15 +12,8 @@ const Login = () => {
   const dispatch = useDispatch();
   // ==== handleFunciton ====
   const handleClickBtnSubmit = (data) => {
-    console.log("data", data);
-    dispatch(
-      login({
-        data,
-        callback: (res, data) => {
-          console.log(res);
-        },
-      })
-    );
+    dispatch(loginUser(data));
+    navigate("/general/home");
   };
 
   const handleClickRedirectSignUp = () => {
@@ -66,7 +59,7 @@ const Login = () => {
               alt="background left"
             />
           </div>
-          <div className="h-4/5 w-1/3 px-6 py-8 rounded-sm sm:w-full">
+          <div className="h-4/5 w-1/3 px-6 py-8 rounded-sm sm:w-full items-center justify-center flex-col mt-auto mb-auto">
             <h2
               className="text-title
            font-bold text-3xl uppercase text-center mb-4"

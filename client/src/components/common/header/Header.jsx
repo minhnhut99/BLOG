@@ -6,7 +6,10 @@ import { TbWriting } from "react-icons/tb";
 import { AiOutlineClose } from "react-icons/ai";
 import { BiUser } from "react-icons/bi";
 import { Link } from "react-router-dom";
-
+import Logo from "../../../assets/images/logo.jpg";
+import { useDispatch, useSelector } from "react-redux";
+import { useGetUserDetailsQuery } from "../../../services/auth/authService";
+import { setCredentials } from "../../../redux/authSlice";
 const getScreenWidth = () => {
   const WIDTH_SCREEN = window.innerWidth;
   return WIDTH_SCREEN;
@@ -36,6 +39,17 @@ const Header = () => {
     },
   ];
   const [isOpenNav, setIsOpenNav] = useState(false);
+  const { userInfo } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  // auto authentication
+  const { data, isFetching } = useGetUserDetailsQuery("userDetails", {
+    // perform a refetch every 15mins
+    pollingInterval: 900000,
+  });
+  console.log("isFetching", isFetching);
+  useEffect(() => {
+    if (data) dispatch(setCredentials(data));
+  }, [data, dispatch]);
   const handleClickIconOpenNav = () => {
     setIsOpenNav(!isOpenNav);
   };
@@ -66,7 +80,13 @@ const Header = () => {
     <React.Fragment>
       <header className="relative flex items-center lg:justify-between lg:px-1 py-4 xl:py-2 border-b border-b-gray-300">
         <div className="ml-12">
-          <h1>NhutHuynh</h1>
+          <h1>
+            <img
+              className="w-92 h-20 object-cover"
+              src={Logo}
+              alt="logo blog"
+            />
+          </h1>
         </div>
 
         <div
